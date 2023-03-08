@@ -1,6 +1,7 @@
 from graph import Graph as g
 import tkinter as tk
 from tkinter import simpledialog
+import networkx as nx
 
 root = tk.Tk()
 root.title("Graph Library")
@@ -14,29 +15,58 @@ menu = tk.OptionMenu(root, var, *options)
 menu.pack(pady=10, anchor="center")
 
 guser = g()
+
+graph = {'A': set(['B', 'C']),
+         'B': set(['A', 'D', 'E']),
+         'C': set(['A', 'F']),
+         'D': set(['B']),
+         'E': set(['B', 'F']),
+         'F': set(['C', 'E'])}
+
+G = nx.DiGraph()
+
 def execute():
     option = var.get()
     if option == "Insert Edge":
-        guser.insert_edge()
+        start_end = simpledialog.askstring("Shortest Path", "Enter start and end nodes (separated by a space):")
+        if start_end is not None:
+            start, end = start_end.split()
+        
+        if start and end:
+            guser.insert_edge(graph, start, end)
+        else:
+            print("Invalid input.")
+    
+        print(graph)
         
     elif option == "Insert Vertex":
-        guser.insert_vertex()
+        guser.insert_vertex(graph)
 
     elif option == "DFS":
-        guser.dfs()
+        start_node = simpledialog.askstring("Start Node", "Enter the starting node:")
 
+        tree = guser.dfs(graph, start_node)
+
+        print("Edges:")
+        print(tree)
+        
     elif option == "BFS":
-        guser.bfs()
+        start_node = simpledialog.askstring("Start Node", "Enter the starting node:")
+        tree = guser.bfs(graph, start_node)
+        
+        print("Edges:")
+        print(tree)
 
     elif option == "Dijkstra":
-        guser.dijkstra()
+        guser.dijkstra(graph)
 
     elif option == "Find Path":
-        start_node = simpledialog.askstring("Start Node", "Enter the starting node:")
-        end_node = simpledialog.askstring("End Node", "Enter the ending node:")
+        start_end = simpledialog.askstring("Find Path", "Enter start and end nodes (separated by a space):")
+        if start_end is not None:
+            start, end = start_end.split()
 
-        if start_node and end_node:
-            guser.find_path(start_node, end_node)
+        if start and end:
+            guser.find_path(graph, start, end)
         else:
             print("Invalid input.")
 
