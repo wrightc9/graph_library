@@ -5,13 +5,13 @@ class Graph:
         pass
     
     def insert_edge(self, graph, u, v):
-         # add v to the adjacency list of u
+         # add v to the adjacency list of u and vice versa
         graph[u].add(v)
-        # add u to the adjacency list of v
         graph[v].add(u)
 
-    def insert_vertex(self, graph):
-        print("Insert Vertex")
+    def insert_vertex(self, graph, vertex):
+        if vertex not in graph:
+            graph[vertex] = set()
 
     def dfs(self, graph, node):
         stack = []
@@ -32,24 +32,24 @@ class Graph:
         return edges
     
     def bfs(self, graph, start):
-        Q = deque() # create a queue for BFS
-        L = [] # create a list to store the edges
+        Q = deque()
+        L = []
         
-        Q.append(start) # enqueue the source vertex s
-        visited = {start} # mark s as visited
+        Q.append(start)
+        visited = {start}
         
-        while Q: # while the queue is not empty
-            v = Q.popleft() # dequeue the front vertex
+        while Q:
+            v = Q.popleft()
             
-            for w in graph[v]: # for all neighbors w of v in graph g
-                if w not in visited: # if w is not visited
-                    L.append((v, w)) # add (v,w) edge to the list
-                    Q.append(w) # enqueue w
-                    visited.add(w) # mark w as visited
+            for w in graph[v]:
+                if w not in visited:
+                    L.append((v, w))
+                    Q.append(w)
+                    visited.add(w)
         
         return L
     
-    def dijkstra(self, graph):
+    def dijkstra(self, graph, start, end):
         print("Dijkstra")
     
     def find_path(self, graph, u, v):

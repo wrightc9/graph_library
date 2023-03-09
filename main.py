@@ -28,7 +28,7 @@ G = nx.DiGraph()
 def execute():
     option = var.get()
     if option == "Insert Edge":
-        start_end = simpledialog.askstring("Shortest Path", "Enter start and end nodes (separated by a space):")
+        start_end = simpledialog.askstring("Insert Edge", "Enter start and end nodes (separated by a space):")
         if start_end is not None:
             start, end = start_end.split()
         
@@ -40,7 +40,11 @@ def execute():
         print(graph)
         
     elif option == "Insert Vertex":
-        guser.insert_vertex(graph)
+        vertex = simpledialog.askstring("Vertex", "Enter the vertex to add:")
+        guser.insert_vertex(graph, vertex)
+
+        print("New Graph with added Vertex:")
+        print(graph)
 
     elif option == "DFS":
         start_node = simpledialog.askstring("Start Node", "Enter the starting node:")
@@ -58,8 +62,15 @@ def execute():
         print(tree)
 
     elif option == "Dijkstra":
-        guser.dijkstra(graph)
+        start_end = simpledialog.askstring("Find Shortest Path", "Enter start and end nodes (separated by a space):")
+        if start_end is not None:
+            start, end = start_end.split()
 
+        if start and end:
+            guser.dijkstra(graph,)
+        else:
+            print("Invalid input.")
+        
     elif option == "Find Path":
         start_end = simpledialog.askstring("Find Path", "Enter start and end nodes (separated by a space):")
         if start_end is not None:
