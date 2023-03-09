@@ -6,8 +6,13 @@ class Graph:
     
     def insert_edge(self, graph, u, v):
          # add v to the adjacency list of u and vice versa
-        graph[u].add(v)
-        graph[v].add(u)
+        if u and v in graph:
+            graph[u].add(v)
+            graph[v].add(u)
+            return True
+        else:
+            return False
+
 
     def insert_vertex(self, graph, vertex):
         if vertex not in graph:
@@ -49,7 +54,7 @@ class Graph:
         
         return L
     
-    def dijkstra(self, graph, start, end):
+    def dijkstra(self, graph, start):
         print("Dijkstra")
     
     def find_path(self, graph, u, v):

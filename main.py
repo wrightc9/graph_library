@@ -1,6 +1,7 @@
 from graph import Graph as g
 import tkinter as tk
 from tkinter import simpledialog
+import tkinter.messagebox
 import networkx as nx
 
 root = tk.Tk()
@@ -33,12 +34,15 @@ def execute():
             start, end = start_end.split()
         
         if start and end:
-            guser.insert_edge(graph, start, end)
+            if guser.insert_edge(graph, start, end):
+                print("Updated edges in Graph:")
+                print(graph)
+            else:
+                print("Either vertex {} or vertex {} does not exist in the current graph.".format(start, end))
+
         else:
             print("Invalid input.")
     
-        print(graph)
-        
     elif option == "Insert Vertex":
         vertex = simpledialog.askstring("Vertex", "Enter the vertex to add:")
         guser.insert_vertex(graph, vertex)
@@ -62,14 +66,11 @@ def execute():
         print(tree)
 
     elif option == "Dijkstra":
-        start_end = simpledialog.askstring("Find Shortest Path", "Enter start and end nodes (separated by a space):")
-        if start_end is not None:
-            start, end = start_end.split()
+        start_node = simpledialog.askstring("Start Node", "Enter the starting node:")
+        paths = guser.dijkstra(graph, start_node)
 
-        if start and end:
-            guser.dijkstra(graph,)
-        else:
-            print("Invalid input.")
+        print("Paths from {} to all other vertices.".format(start_node))
+        print(paths)
         
     elif option == "Find Path":
         start_end = simpledialog.askstring("Find Path", "Enter start and end nodes (separated by a space):")
