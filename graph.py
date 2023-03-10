@@ -1,4 +1,5 @@
 from collections import deque
+import heapq
 
 class Graph:
     def __init__(self) -> None:
@@ -55,7 +56,50 @@ class Graph:
         return L
     
     def dijkstra(self, graph, start):
-        print("Dijkstra")
+        # Initialize distances, previous nodes, and visited set
+        distances = {node: float('inf') for node in graph}
+        distances[start] = 0
+        previous = {node: None for node in graph}
+        visited = set()
+
+        # Create a priority queue and add the starting node
+        pq = [(0, start)]
+
+        while pq:
+            # Get the node with the smallest distance
+            current_distance, current_node = heapq.heappop(pq)
+
+            # Skip this node if we already processed it
+            if current_node in visited:
+                continue
+
+            # Add it to the visited set
+            visited.add(current_node)
+
+            # Update the distances of its neighbors
+            for neighbor, weight in graph[current_node]:
+                distance = current_distance + weight
+                if distance < distances[neighbor]:
+                    distances[neighbor] = distance
+                    previous[neighbor] = current_node
+                    heapq.heappush(pq, (distance, neighbor))
+
+        # Reconstruct paths from start to all other nodes
+        paths = {node: [] for node in graph}
+        for node in graph:
+            if node == start:
+                paths[node] = [start]
+            elif previous[node] is None:
+                paths[node] = []
+            else:
+                path = [node]
+                while previous[path[-1]] != start:
+                    path.append(previous[path[-1]])
+                path.append(start)
+                path.reverse()
+                paths[node] = path
+
+        return distances, paths
     
     def find_path(self, graph, u, v):
         print("Find Path from {} to {}".format(u, v))

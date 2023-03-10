@@ -24,6 +24,13 @@ graph = {'A': set(['B', 'C']),
          'E': set(['B', 'F']),
          'F': set(['C', 'E'])}
 
+weighted_graph = {'A': set([('B', 4), ('C', 2)]),
+                  'B': set([('A', 4), ('C', 1), ('D', 3), ('E', 2)]),
+                  'C': set([('A', 2), ('B', 1)]),
+                  'D': set([('B', 3), ('E', 5)]),
+                  'E': set([('B', 2), ('D', 5)])}
+
+
 G = nx.DiGraph()
 
 def execute():
@@ -67,8 +74,10 @@ def execute():
 
     elif option == "Dijkstra":
         start_node = simpledialog.askstring("Start Node", "Enter the starting node:")
-        paths = guser.dijkstra(graph, start_node)
+        distances, paths = guser.dijkstra(weighted_graph, start_node)
 
+        print("Distances to from {} to all other vertices:".format(start_node))
+        print(distances)
         print("Paths from {} to all other vertices.".format(start_node))
         print(paths)
         
