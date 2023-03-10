@@ -87,7 +87,11 @@ def execute():
             start, end = start_end.split()
 
         if start and end:
-            guser.find_path(graph, start, end)
+            path = guser.find_path(graph, start, end)
+            if path is not None:
+                print(path)
+            else:
+                print("No valid path from {} to {}".format(start, end))
         else:
             print("Invalid input.")
 
