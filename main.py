@@ -5,7 +5,7 @@ from tkinter import messagebox
 
 root = tk.Tk()
 root.title("Graph Library")
-root.geometry("250x200")
+# root.geometry("250x200")
 root.eval('tk::PlaceWindow . center')
 
 
@@ -120,5 +120,20 @@ def execute():
 # Create button to execute selected option
 execute_button = tk.Button(root, text="Execute", command=execute)
 execute_button.pack(pady=10, anchor="center")
+
+T = tk.Text(root, height = 5, width = 52)
+l = tk.Label(root, text = "Unweighted graph:")
+l.config(font =("Courier", 14))
+T.insert(tk.END, graph)
+
+T2 = tk.Text(root, height = 5, width = 52)
+l2 = tk.Label(root, text = "Weighted graph:")
+l2.config(font =("Courier", 14))
+T2.insert(tk.END, weighted_graph)
+
+l.pack()
+T.pack()
+l2.pack()
+T2.pack()
 
 root.mainloop()
