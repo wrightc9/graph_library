@@ -18,42 +18,50 @@ class Graph:
     def insert_vertex(self, graph, vertex):
         if vertex not in graph:
             graph[vertex] = set()
+            return True
+        else:
+            return False
 
-    def dfs(self, graph, node):
+    def dfs(self, graph, start):
         stack = []
         visited = []
         edges = []
 
-        stack.append(node)
-        visited.append(node)
-        while stack:
-            v = stack.pop()
+        if start in graph:
+            stack.append(start)
+            visited.append(start)
+            while stack:
+                v = stack.pop()
+                
+                for w in graph[v]:
+                    if w not in visited:
+                        edges.append((v,w))
+                        stack.append(w)
+                        visited.append(w)
             
-            for w in graph[v]:
-                if w not in visited:
-                    edges.append((v,w))
-                    stack.append(w)
-                    visited.append(w)
-        
-        return edges
+            return edges
+        else:
+            return edges
     
     def bfs(self, graph, start):
         Q = deque()
         L = []
         
-        Q.append(start)
-        visited = {start}
-        
-        while Q:
-            v = Q.popleft()
+        if start in graph:
+            Q.append(start)
+            visited = {start}
+            while Q:
+                v = Q.popleft()
+                
+                for w in graph[v]:
+                    if w not in visited:
+                        L.append((v, w))
+                        Q.append(w)
+                        visited.add(w)
             
-            for w in graph[v]:
-                if w not in visited:
-                    L.append((v, w))
-                    Q.append(w)
-                    visited.add(w)
-        
-        return L
+            return L
+        else:
+            return L
     
     def dijkstra(self, graph, start):
         # Initialize distances, previous nodes, and visited set
@@ -88,7 +96,7 @@ class Graph:
         paths = {node: [] for node in graph}
         for node in graph:
             if node == start:
-                paths[node] = [start]
+                paths[node] = [start] 
             elif previous[node] is None:
                 paths[node] = []
             else:
