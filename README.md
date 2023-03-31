@@ -2,6 +2,10 @@
 A Graph Library, with insert edge, insert vertex, DFS, BFS, Dijkstra, Find Path between u-v
 
 You will need to have python3 installed to run this on ubuntu
+(at least Python 3.1)
+
+command:
+sudo apt install python3
 
 Run with command "python3 main.py" in ubuntu.
 
